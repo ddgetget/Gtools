@@ -10,7 +10,7 @@
 # @Ref:
 import os.path
 
-from gtools.config import xml_dict_data, dict_data
+from gtools.config import xml_dict_data, dict_data, xml_dict_data1
 from gtools.data.transformer.xml import dict_xml, xml_dict
 from gtools.io.json import write_json_line, read_json_line, read_json, write_json
 from gtools.io.xml import write_xml_by_json
@@ -40,9 +40,10 @@ if __name__ == '__main__':
     test_yaml(dict_data)
 
     write_xml_by_json(path="temp/data.xml", data=xml_dict_data)
+    write_xml_by_json(path="temp/data.xml", data=xml_dict_data1)
 
     xmlstr = dict_xml(data=xml_dict_data)
     print(xmlstr)
     print(type(xmlstr))
     dict = xml_dict(xmlstr=xmlstr, moudle="mydocument")
-    print(dict["mydocument"]["and"]['manny'][0])
+    print(dict["mydocument"]["and"])

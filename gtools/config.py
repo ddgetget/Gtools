@@ -24,6 +24,36 @@ xml_dict_data = {
     }
 }
 
+xml_dict_data1 = {
+    "mydocument": {
+        "@has": "an attribute",
+        "and": {
+            "many": [
+                "elements",
+                "more elements"
+            ]
+        },
+        "plus": {
+            "@a": "complex",
+            "#text": "element as well"
+        },
+        "mydocument": {
+            "@has": "an attribute",
+            "and": {
+                "many": [
+                    "elements",
+                    "more elements"
+                ]
+            },
+            "plus": {
+                "@a": "complex",
+                "#text": "element as well"
+            },
+
+        }
+    }
+}
+
 dict_data = {
     "sentence": "新疆按问安静的空间和凯撒好",
     "extracted": [
