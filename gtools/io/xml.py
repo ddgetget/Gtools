@@ -8,11 +8,17 @@
 # @Project: FastDeploy
 # @Package: 
 # @Ref: https://www.jb51.net/article/259852.htm
+import json
+from xml.etree import ElementTree as ET
 
-from xml.etree import ElementTree as et
+import xmltodict
 
 
-def write_xml(path, data):
+def init_xml(path):
+    pass
+
+
+def write_xml(path, ann_tree):
     """
     将字典数据一json形式写到本地
     :param path: json数据路径
@@ -32,21 +38,22 @@ def write_xml(path, data):
         </item>
     </catalog>
     """
+    ann_tree.write(path, encoding="utf-8")
 
-    # 创建根标签
-    root = et.Element('home')
-    # 创建子标签大儿子
-    son1 = et.SubElement(root, 'son', attrib={'name': 'son01'})
-    # 创建小儿子
-    son2 = et.SubElement(root, 'son', attrib={'name': 'son02'})
 
-    # 在大儿子中创建孙子
-    gdson = et.SubElement(son1, 'gdson', attrib={'name': 'gdson1'})
-
-    # 把root节点放到根节点
-    tree = et.ElementTree(root)
-    # 保存xml
-    tree.write(path, encoding='utf-8')
+def write_xml_by_json(path, data):
+    """
+    数据需要有一个根节点
+    :param path:
+    :param data:
+    :return:
+    example: {'student': {'course': {'name': 'math', 'score': '90'},
+                        'info': {'sex': 'male', 'name': 'name'}, 'stid': '10213'}}
+    """
+    xmlstr = xmltodict.unparse(data)
+    # print(xmlstr, type(xmlstr))
+    with open(path, 'w', encoding="utf-8") as f:
+        f.write(xmlstr)
 
 
 def read_xml(path):
@@ -55,11 +62,6 @@ def read_xml(path):
     :param path: josn数据路径
     :return: 返回字典
     """
-    f = open(path, 'r', encoding="utf-8")  # 读取文件
-    yml_config = yaml.load(f, Loader=yaml.FullLoader)  # Loader为了更加安全
-    """Loader的几种加载方式
-    BaseLoader - -仅加载最基本的YAML
-    SafeLoader - -安全地加载YAML语言的子集。建议用于加载不受信任的输入。
-    FullLoader - -加载完整的YAML语言。避免任意代码执行。这是当前（PyYAML5.1）默认加载器调用yaml.load(input)（发出警告后）。
-    UnsafeLoader - -（也称为Loader向后兼容性）原始的Loader代码，可以通过不受信任的数据输入轻松利用。"""
-    return yml_config
+    ann_tree = ET.parse(path)
+    ann_root = ann_tree.getroot()
+    return ann_root
