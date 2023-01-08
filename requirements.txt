@@ -1,0 +1,5 @@
+attrs==22.2.0
+certifi
+jsonlines==3.1.0
+PyYAML==6.0
+xmltodict==0.13.0
